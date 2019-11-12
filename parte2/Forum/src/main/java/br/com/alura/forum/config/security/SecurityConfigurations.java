@@ -21,6 +21,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AutenticacaoService autenticacaoService;
 	
+	@Autowired
+	private Token_Service tokenService;
+	
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -44,7 +47,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated() // qualquer outra requisição usuário deverá ser autenticado
 	    .and().csrf().disable()
 	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
-	    .and().addFilterBefore(new AutenticacaoViaTokenFilter() , UsernamePasswordAuthenticationFilter.class)
+	    .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService) , UsernamePasswordAuthenticationFilter.class)
 	    ; // informando ao Spring para não guardar sessão 
 	
 	}
