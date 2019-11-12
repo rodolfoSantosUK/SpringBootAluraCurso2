@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -42,10 +43,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated() // qualquer outra requisição usuário deverá ser autenticado
 	    .and().csrf().disable()
-	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ; // informando ao Spring para não guardar sessão 
+	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
+	    .and().addFilterBefore(new AutenticacaoViaTokenFilter() , UsernamePasswordAuthenticationFilter.class)
+	    ; // informando ao Spring para não guardar sessão 
 	
 	}
-	
 	
 	//Configuracoes de recursos estaticos(js, css, imagens, etc.)
 	@Override
