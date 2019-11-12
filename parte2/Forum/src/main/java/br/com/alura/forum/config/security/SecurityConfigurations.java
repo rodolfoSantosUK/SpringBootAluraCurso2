@@ -29,7 +29,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	//Configuracoes de autenticacao
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	  
 	  auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+		
 	}
 	
 	//Configuracoes de autorizacao
@@ -37,7 +39,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
-		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll();
+		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+		.anyRequest().authenticated() // qualquer outra requisição usuário deverá ser autenticado
+	    .and().formLogin()
+	   ;
+	
 	}
 	
 	
