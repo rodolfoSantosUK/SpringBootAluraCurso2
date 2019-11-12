@@ -29,20 +29,20 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	//Configuracoes de autenticacao
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	  
 	  auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
-		
 	}
 	
 	//Configuracoes de autorizacao
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
-		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+		.antMatchers(HttpMethod.GET,  "/topicos").permitAll()
+		.antMatchers(HttpMethod.GET,  "/topicos/*").permitAll() 
+		.antMatchers(HttpMethod.POST, "/auth2").permitAll()  
+		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated() // qualquer outra requisição usuário deverá ser autenticado
-	    .and().formLogin()
-	   ;
+	    .and().csrf().disable()
+	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ; // informando ao Spring para não guardar sessão 
 	
 	}
 	

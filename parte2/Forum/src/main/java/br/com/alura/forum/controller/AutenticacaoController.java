@@ -18,7 +18,7 @@ import br.com.alura.forum.controller.dto.TokenDto;
 import br.com.alura.forum.controller.form.LoginForm;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth2")
 public class AutenticacaoController {
 	
 	@Autowired
