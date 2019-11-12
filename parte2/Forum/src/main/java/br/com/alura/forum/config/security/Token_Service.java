@@ -25,7 +25,7 @@ public class Token_Service {
 	    Date dataExpiracao = new Date( hoje.getTime() +  Long.parseLong(expiration));
 	    
 		return Jwts.builder().setIssuer("Issuer: API de forum da Alura") // Aplicação que gerou o token 
-				.setSubject(logado.getNome()) // Quem é o usuario autenticado a qual pertence esse token 
+				.setSubject(logado.getId().toString()) // Quem é o usuario autenticado a qual pertence esse token 
 				.setIssuedAt(new Date())
 				.setExpiration(dataExpiracao)
 				.signWith(SignatureAlgorithm.HS256, secret) 
@@ -42,6 +42,11 @@ public class Token_Service {
 			return false ;
 		}
 		 
+	}
+
+	public Long getIdUsuario(String token) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
