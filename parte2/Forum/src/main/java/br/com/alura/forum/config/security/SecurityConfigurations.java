@@ -48,13 +48,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,  "/topicos").permitAll()
 		.antMatchers(HttpMethod.GET,  "/topicos/*").permitAll() 
 		.antMatchers(HttpMethod.POST, "/auth2").permitAll()  
+		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated() // qualquer outra requisição usuário deverá ser autenticado
 	    .and().csrf().disable()
 	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
 	    .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository) , UsernamePasswordAuthenticationFilter.class)
 	    ; // informando ao Spring para não guardar sessão 
-	
 	}
 	
 	//Configuracoes de recursos estaticos(js, css, imagens, etc.)
